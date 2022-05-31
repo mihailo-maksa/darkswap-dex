@@ -1,12 +1,13 @@
 {
   "name": "solidswap-dex",
   "dependencies": {
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@uniswap/lib": "^4.0.1-alpha",
     "@uniswap/v2-core": "^1.0.1",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8",
-    "i": "^0.3.7",
+    "hardhat": "^2.9.7",
     "npm": "^8.11.0"
   }
 }

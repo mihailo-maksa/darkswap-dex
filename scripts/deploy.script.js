@@ -1,32 +1,45 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+const hre = require('hardhat')
+
+const feeToSetter = '0x2cD3d676F4C53D645aa523cadBf00BA049f4E8eB'
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
+  const WETH = await hre.ethers.getContractFactory('WETH')
+  const weth = await WETH.deploy()
+  await weth.deployed()
+  console.log(`WETH token address: ${weth.address}`)
 
-  // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const WETH_TOKEN_ADDRESS = weth.address
 
-  await greeter.deployed();
+  const SolidSwapV2ERC20 = await hre.ethers.getContractFactory(
+    'SolidSwapV2ERC20',
+  )
+  const solidSwapV2ERC20 = await SolidSwapV2ERC20.deploy()
+  await solidSwapV2ERC20.deployed()
+  console.log(`SolidSwap token address: ${solidSwapV2ERC20.address}`)
 
-  console.log("Greeter deployed to:", greeter.address);
+  const SolidSwapV2Factory = await hre.ethers.getContractFactory(
+    'SolidSwapV2Factory',
+  )
+  const solidSwapV2Factory = await SolidSwapV2Factory.deploy(feeToSetter)
+  await solidSwapV2Factory.deployed()
+  console.log(`SolidSwapV2Factory address: ${solidSwapV2Factory.address}`)
+
+  const factory = solidSwapV2Factory.address
+
+  const SolidSwapV2Router = await hre.ethers.getContractFactory(
+    'SolidSwapV2Router',
+  )
+  const solidSwapV2Router = await SolidSwapV2Router.deploy(
+    factory,
+    WETH_TOKEN_ADDRESS,
+  )
+  await solidSwapV2Router.deployed()
+  console.log(`SolidSwapV2Router address: ${solidSwapV2Router.address}`)
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+    console.error(error)
+    process.exit(1)
+  })

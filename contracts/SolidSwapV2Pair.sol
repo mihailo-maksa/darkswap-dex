@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.5.15;
+pragma solidity ^0.6.6;
 
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
-import "./V2ERC20.sol";
+import "./SolidSwapV2ERC20.sol";
 import "@uniswap/v2-core/contracts/libraries/Math.sol";
 import "@uniswap/v2-core/contracts/libraries/SafeMath.sol";
 import "@uniswap/v2-core/contracts/libraries/UQ112x112.sol";
@@ -10,7 +10,7 @@ import "@uniswap/v2-core/contracts/interfaces/IERC20.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Callee.sol";
 
-contract V2Pair is IUniswapV2Pair, V2ERC20 {
+contract SolidSwapV2Pair is IUniswapV2Pair, SolidSwapV2ERC20 {
     using SafeMath  for uint;
     using UQ112x112 for uint224;
 
